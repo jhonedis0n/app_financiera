@@ -30,64 +30,65 @@
             font-family: 'Inter', sans-serif;
         }
 
-        /* Control Bar / Header Integrado */
         .control-bar {
             background-color: var(--bg-card);
             border-bottom: 1px solid var(--border-color);
-            padding: 12px 0;
+            padding: 10px 0;
             position: sticky;
             top: 0;
             z-index: 1000;
         }
 
-        /* Tarjetas de Módulos */
         .card-custom {
             background-color: var(--bg-card);
             border: 1px solid var(--border-color);
             border-radius: 12px;
             box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            overflow: hidden; /* Evita desbordamiento visual */
         }
 
         .card-header-custom {
             background-color: transparent;
             border-bottom: 1px solid var(--border-color);
-            padding: 16px 20px;
+            padding: 12px 18px;
             font-weight: 600;
+            font-size: 0.95rem;
             color: var(--text-main);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
         }
 
-        /* Tarjetas KPI */
         .kpi-card {
             background-color: var(--bg-card);
             border: 1px solid var(--border-color);
             border-radius: 12px;
-            padding: 20px;
+            padding: 14px 18px;
         }
         .kpi-title {
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             color: var(--text-muted);
             font-weight: 500;
             text-transform: uppercase;
             letter-spacing: 0.05em;
         }
         .kpi-value {
-            font-size: 1.6rem;
+            font-size: 1.4rem;
             font-weight: 700;
             color: var(--text-main);
-            margin-top: 6px;
+            margin-top: 2px;
         }
         .kpi-sub {
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             font-weight: 600;
         }
 
-        /* Badges de Rendimiento */
         .kpi-badge {
             display: inline-flex;
             align-items: center;
-            padding: 4px 10px;
+            padding: 3px 8px;
             border-radius: 20px;
-            font-size: 0.85rem;
+            font-size: 0.82rem;
             font-weight: 600;
         }
         .badge-success {
@@ -99,30 +100,49 @@
             color: #F87171;
         }
 
-        /* Estilos de Tablas con Números Alineados */
+        /* Estilos de Tablas */
         .custom-table {
             color: var(--text-main) !important;
             font-variant-numeric: tabular-nums;
             margin-bottom: 0;
+            font-size: 0.9rem;
+            width: 100%;
+            table-layout: fixed;
         }
+
+        .custom-table th:first-child,
+        .custom-table td:first-child {
+            text-align: left !important;
+            width: 20%;
+        }
+
+        .custom-table th:not(:first-child),
+        .custom-table td:not(:first-child) {
+            text-align: right !important;
+            width: 20%;
+            white-space: nowrap;
+        }
+        
         .custom-table th {
             background-color: rgba(255, 255, 255, 0.03) !important;
             color: var(--text-muted) !important;
             border-color: var(--border-color) !important;
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             text-transform: uppercase;
+            padding: 8px 12px;
         }
         .custom-table td {
             border-color: var(--border-color) !important;
             color: var(--text-main) !important;
+            padding: 8px 12px;
         }
 
-        /* Tom Select Dark Theme */
         .ts-control {
             background-color: #0F172A !important;
             border-color: var(--border-color) !important;
             color: #fff !important;
             border-radius: 8px;
+            padding: 4px 8px;
         }
         .ts-dropdown {
             background-color: #1E293B !important;
@@ -140,21 +160,75 @@
             color: #fff !important;
             border-radius: 4px;
         }
+
+        /* -----------------------------------------------------------------
+        REGLAS DE IMPRESIÓN Y EXPORTACIÓN A PDF
+        ----------------------------------------------------------------- */
+        @media print {
+            @page {
+                size: A4 portrait;
+                margin: 10mm;
+            }
+
+            body {
+                background-color: #0F172A !important; /* Mantiene fondo oscuro en PDF */
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+            }
+
+            .control-bar, .dropdown, .form-check-switch, .rangeselector-container {
+                display: none !important;
+            }
+
+            .container, .container-fluid {
+                width: 100% !important;
+                max-width: 100% !important;
+                padding: 0 !important;
+                margin: 0 !important;
+            }
+
+            .card-custom, .kpi-card {
+                break-inside: avoid;
+                page-break-inside: avoid;
+                margin-bottom: 15px !important;
+                width: 100% !important;
+            }
+
+            /* Ajustar ancho de gráficos en la impresión */
+            .js-plotly-plot, .plot-container, .svg-container {
+                width: 100% !important;
+                margin: 0 auto !important;
+            }
+
+            .svg-container svg {
+                width: 100% !important;
+            }
+        }
     </style>
 </head>
 <body>
 
-    <!-- Control Bar Superior / Filtros Integrados -->
-    <header class="control-bar mb-4">
+    <!-- Control Bar Superior -->
+    <header class="control-bar mb-3">
         <div class="container-fluid container">
-            <form id="filterForm" action="/consultar" method="post" class="row align-items-center g-3">
-                <div class="col-md-3">
-                    <div class="d-flex align-items-center gap-2">
-                        <i class="bi bi-graph-up-arrow text-primary fs-4"></i>
-                        <span class="fw-bold fs-5 text-white">Financial Analytics</span>
-                    </div>
+            <form id="filterForm" action="/consultar" method="post" class="row align-items-center g-2">
+                <div class="col-md-3 d-flex align-items-center gap-2">
+                    <i class="bi bi-graph-up-arrow text-primary fs-5"></i>
+                    <span class="fw-bold fs-6 text-white me-2">Financial Analytics</span>
+                    
+                    <!-- Market Status Badge -->
+                    {% if market_status.is_open %}
+                        <span class="badge bg-success-subtle text-success border border-success-subtle rounded-pill">
+                            ● Bolsa Abierta
+                        </span>
+                    {% else %}
+                        <span class="badge bg-danger-subtle text-danger border border-danger-subtle rounded-pill">
+                            ● Bolsa Cerrada
+                        </span>
+                    {% endif %}
                 </div>
-                <div class="col-md-6">
+
+                <div class="col-md-5">
                     <select id="tickers_selected" name="tickers_selected" multiple placeholder="Buscar empresas..." autocomplete="off">
                         {% for ticker, name in companies.items() %}
                             <option value="{{ ticker }}" {% if ticker in selected_tickers %}selected{% endif %}>
@@ -163,22 +237,38 @@
                         {% endfor %}
                     </select>
                 </div>
-                <div class="col-md-3">
-                    <select class="form-select bg-dark text-light border-secondary" id="period" name="period" onchange="autoSubmit()">
+
+                <div class="col-md-2">
+                    <select class="form-select bg-dark text-light border-secondary form-select-sm" id="period" name="period" onchange="autoSubmit()">
                         <option value="1mo" {% if period == '1mo' %}selected{% endif %}>1 Mes</option>
                         <option value="6mo" {% if period == '6mo' %}selected{% endif %}>6 Meses</option>
                         <option value="1y" {% if period == '1y' %}selected{% endif %}>1 Año</option>
                         <option value="5y" {% if period == '5y' %}selected{% endif %}>5 Años</option>
                     </select>
                 </div>
+
+                <!-- Export Menu -->
+                <div class="col-md-2 text-end">
+                    <div class="dropdown">
+                        <button class="btn btn-sm btn-outline-light dropdown-toggle w-100" type="button" data-bs-toggle="dropdown">
+                            <i class="bi bi-download me-1"></i> Exportar
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-end dropdown-menu-dark">
+                            <li><a class="dropdown-item" href="/export/csv?tickers={{ tickers_query }}&period={{ period }}"><i class="bi bi-filetype-csv me-2"></i>Exportar CSV</a></li>
+                            <li><a class="dropdown-item" href="/export/excel?tickers={{ tickers_query }}&period={{ period }}"><i class="bi bi-file-earmark-excel me-2"></i>Exportar Excel</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="#" onclick="window.print()"><i class="bi bi-printer me-2"></i>Imprimir Ficha / PDF</a></li>
+                        </ul>
+                    </div>
+                </div>
             </form>
         </div>
     </header>
 
-    <main class="container pb-5">
+    <main class="container pb-4">
         
         <!-- Tarjetas KPI Superiores -->
-        <div class="row g-3 mb-4">
+        <div class="row g-3 mb-3">
             <div class="col-md-4">
                 <div class="kpi-card">
                     <div class="kpi-title"><i class="bi bi-trophy text-warning me-1"></i> Top Performer</div>
@@ -204,8 +294,8 @@
             </div>
         </div>
 
-        <!-- Sección de Tablas de Datos -->
-        <div class="row g-4 mb-4">
+        <!-- Tablas de Datos -->
+        <div class="row g-3 mb-3">
             <div class="col-lg-5">
                 <div class="card-custom h-100">
                     <div class="card-header-custom"><i class="bi bi-pie-chart me-2"></i> Rendimiento del Periodo</div>
@@ -216,7 +306,7 @@
             </div>
             <div class="col-lg-7">
                 <div class="card-custom h-100">
-                    <div class="card-header-custom"><i class="bi bi-calculator me-2"></i> Resumen Estadístico (USD)</div>
+                    <div class="card-header-custom"><i class="bi bi-calculator me-2"></i> Resumen Estadístico</div>
                     <div class="card-body p-0 table-responsive">
                         {{ stats_html | safe }}
                     </div>
@@ -224,21 +314,53 @@
             </div>
         </div>
 
-        <!-- Sección de Gráficas de Área -->
-        <div class="row g-4">
+        <!-- Gráficas Principales con Switch de Benchmark -->
+        <div class="row g-3 mb-3">
             <div class="col-12">
                 <div class="card-custom">
-                    <div class="card-header-custom"><i class="bi bi-graph-up me-2"></i> Cotización Histórica de Cierre</div>
-                    <div class="card-body p-3">
+                    <div class="card-header-custom">
+                        <span><i class="bi bi-graph-up me-2"></i> Cotización Histórica de Cierre</span>
+                        <div class="form-check form-switch m-0 fs-6">
+                            <input class="form-check-input" type="checkbox" id="bmSwitch1" onchange="toggleBenchmark(0)">
+                            <label class="form-check-label text-muted fs-7" for="bmSwitch1">S&P 500</label>
+                        </div>
+                    </div>
+                    <div class="card-body p-2" id="chart1_container">
                         {{ chart_precios | safe }}
                     </div>
                 </div>
             </div>
             <div class="col-12">
                 <div class="card-custom">
-                    <div class="card-header-custom"><i class="bi bi-cash-stack me-2"></i> Evolución de Inversión Base ($1,000 USD)</div>
-                    <div class="card-body p-3">
+                    <div class="card-header-custom">
+                        <span><i class="bi bi-cash-stack me-2"></i> Evolución de Inversión Base ($1,000 USD)</span>
+                        <div class="form-check form-switch m-0 fs-6">
+                            <input class="form-check-input" type="checkbox" id="bmSwitch2" onchange="toggleBenchmark(1)">
+                            <label class="form-check-label text-muted fs-7" for="bmSwitch2">S&P 500</label>
+                        </div>
+                    </div>
+                    <div class="card-body p-2" id="chart2_container">
                         {{ chart_inversion | safe }}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Analítica Avanzada: Correlación y Volatilidad -->
+        <div class="row g-3">
+            <div class="col-md-6">
+                <div class="card-custom">
+                    <div class="card-header-custom"><i class="bi bi-grid-3x3 me-2"></i> Matriz de Correlación</div>
+                    <div class="card-body p-2">
+                        {{ chart_corr | safe }}
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card-custom">
+                    <div class="card-header-custom"><i class="bi bi-bar-chart-steps me-2"></i> Distribución de Retornos Diarios</div>
+                    <div class="card-body p-2">
+                        {{ chart_box | safe }}
                     </div>
                 </div>
             </div>
@@ -254,7 +376,6 @@
             document.getElementById('filterForm').submit();
         }
 
-        // Inicialización de Tom Select con envío automático al cambiar selección
         new TomSelect("#tickers_selected", {
             plugins: ['remove_button'],
             create: false,
@@ -263,6 +384,19 @@
                 autoSubmit();
             }
         });
+
+        function toggleBenchmark(chartIdx) {
+            const containers = ['chart1_container', 'chart2_container'];
+            const container = document.getElementById(containers[chartIdx]);
+            const plotDiv = container.querySelector('.plotly-graph-div');
+            if (plotDiv) {
+                const totalTraces = plotDiv.data.length;
+                const bmIndex = totalTraces - 1;
+                const currentVis = plotDiv.data[bmIndex].visible;
+                const newVis = (currentVis === true) ? 'legendonly' : true;
+                Plotly.restyle(plotDiv, { visible: newVis }, [bmIndex]);
+            }
+        }
     </script>
 </body>
 </html>

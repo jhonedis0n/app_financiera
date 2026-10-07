@@ -5,3 +5,7 @@ jinja2
 yfinance
 pandas
 plotly
+openpyxl
+pytz
+numpy
+python-multipart
