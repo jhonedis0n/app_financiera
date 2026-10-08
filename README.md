@@ -14,8 +14,8 @@ Los precios históricos se obtienen desde Yahoo Finance mediante `yfinance`. Los
 Clona el repositorio y entra en su carpeta:
 
 ```bash
-git clone <URL_DEL_REPOSITORIO>
-cd <CARPETA_DEL_REPOSITORIO>
+git clone https://github.com/jhonedis0n/app_financiera
+cd app_financiera
 ```
 
 Crea un entorno virtual e instala las dependencias:
@@ -55,7 +55,12 @@ Abre <http://127.0.0.1:8000> en el navegador. Para detener el servidor, pulsa `C
 
 ```text
 .
-├── app.py              # Aplicación FastAPI y lógica del dashboard
+├── app.py              # Punto de entrada compatible con Uvicorn
+├── financial_dashboard/
+│   ├── __init__.py
+│   ├── main.py          # Creación de la aplicación FastAPI
+│   ├── routes.py        # Rutas HTTP y exportaciones
+│   └── analytics.py     # Datos, métricas y gráficos
 ├── requirements.txt    # Dependencias de Python
 ├── templates/
 │   └── index.html       # Interfaz del dashboard
