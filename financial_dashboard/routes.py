@@ -14,6 +14,11 @@ templates = Jinja2Templates(
 )
 
 
+@router.get("/health")
+def health_check():
+    return {"status": "ok"}
+
+
 @router.get("/", response_class=HTMLResponse)
 async def index(request: Request):
     context = fetch_and_process_data(DEFAULT_TICKERS, period="1y")
