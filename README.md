@@ -117,4 +117,4 @@ Abre <http://127.0.0.1:8000>. También se puede iniciar con `python app.py`.
 
 ## Licencia
 
-Este repositorio todavía no incluye un archivo de licencia. Hacerlo público permite consultar el código, pero no concede automáticamente permiso para reutilizarlo, modificarlo o distribuirlo. Añade una licencia cuando hayas decidido esos permisos.
+El código fuente de este proyecto está bajo la licencia MIT. Consulta el archivo [LICENSE](LICENSE) para ver los términos. Los datos y servicios de terceros, como Yahoo Finance, están sujetos a sus propios términos.
